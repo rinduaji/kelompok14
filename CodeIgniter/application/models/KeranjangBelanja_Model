@@ -1,0 +1,151 @@
+<?php
+	class KeranjangBelanja_Model extends CI_Model
+	{
+
+		var $table = 'keranjangbelanja';
+
+		public function __construct()
+		{
+			parent::__construct();
+		}
+
+		private function getTable(){
+			return 'keranjangbelanja';
+		}
+
+		public function getAll(){
+			$query = $this->db->get($this->getTable());
+			if($query->num_rows() > 0 ) {
+				foreach ($query->result() as $row) {
+					$Anggota[] = $row;
+				}
+				return $Anggota;
+			}
+		}
+
+	public function get_nama_login()
+	{
+		$this->db->select('nama');
+		$this->db->from('login');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	public function get_nama_login_by_id($nama)
+	{
+		$this->db->select('idLogin');
+		$this->db->from('login');
+		$this->db->where('nama',$nama);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
+	public function get_nama_penjual()
+	{
+		$this->db->select('namaPenjual');
+		$this->db->from('penjual');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	public function get_nama_penjual_by_id($nama)
+	{
+		$this->db->select('idPenjual');
+		$this->db->from('penjual');
+		$this->db->where('namaPenjual',$nama);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
+	public function get_nama_barang()
+	{
+		$this->db->select('namaBarang');
+		$this->db->from('barang');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	public function get_nama_barang_by_id($nama)
+	{
+		$this->db->select('idBarang');
+		$this->db->from('barang');
+		$this->db->where('namaBarang',$nama);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
+	public function get_nama_ongkir()
+	{
+		$this->db->select('kota');
+		$this->db->from('ongkir');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	public function get_nama_ongkir_by_id($nama)
+	{
+		$this->db->select('idOngkir');
+		$this->db->from('ongkir');
+		$this->db->where('kota',$nama);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
+	public function get_nama_kategori()
+	{
+		$this->db->select('namaKategori');
+		$this->db->from('kategori');
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
+	public function get_nama_kategori_by_id($nama)
+	{
+		$this->db->select('idKategori');
+		$this->db->from('kategori');
+		$this->db->where('namaKategori',$nama);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
+		public function get_keranjangbelanja_by_id($id)
+		{
+			$this->db->from($this->getTable());
+			$this->db->where('idKeranjangBelanja',$id);
+			$query = $this->db->get();
+
+			return $query->row();
+		}
+
+		public function keranjangbelanja_add($data)
+		{
+			$this->db->insert($this->table, $data);
+			return $this->db->insert_id();
+		}
+
+		public function keranjangbelanja_update($where,$data)
+		{
+			
+			$this->db->update($this->getTable(), $data, $where);
+			return $this->db->affected_rows();
+		}
+
+		public function delete_keranjangbelanja_by_id($id)
+		{
+			$this->db->where('idKeranjangBelanja', $id);
+			$this->db->delete($this->getTable());
+		}
+
+	}
+
+?>
